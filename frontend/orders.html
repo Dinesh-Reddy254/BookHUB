@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Orders</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<section class="book-section">
+
+<h2>Orders</h2>
+
+<div id="orders" class="book-grid"></div>
+
+</section>
+
+<script>
+
+fetch("http://127.0.0.1:5000/orders")
+
+.then(res=>res.json())
+
+.then(data=>{
+
+let html="";
+
+data.forEach(order=>{
+
+html+=`
+
+<div class="book-card">
+
+<h3>${order.title}</h3>
+
+<p>Buyer: ${order.buyer_email}</p>
+
+<p class="price">₹${order.price}</p>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("orders").innerHTML=html;
+
+});
+
+</script>
+
+</body>
+</html>

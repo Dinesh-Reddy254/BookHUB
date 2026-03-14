@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>BookHub</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+
+<header class="navbar">
+
+<div class="logo">
+<i class="fa-solid fa-book"></i> BookHub
+</div>
+
+<div class="search-bar">
+
+<input id="searchInput" placeholder="Search books">
+
+<button onclick="searchBooks()">
+<i class="fa fa-search"></i>
+</button>
+
+</div>
+
+<div class="nav-links">
+
+<a href="index.html">Home</a>
+<a href="dashboard.html">Dashboard</a>
+<a href="add_book.html">Sell Book</a>
+<a href="orders.html">Orders</a>
+<a href="login.html">Login</a>
+
+</div>
+
+</header>
+
+
+<section class="hero">
+
+<div class="hero-content">
+
+<h1>Welcome to BookHub</h1>
+
+<p>Buy • Sell • Discover Academic & History Books</p>
+
+<button onclick="loadBooks()">Explore Books</button>
+
+</div>
+
+</section>
+
+
+<section class="book-section">
+
+<h2>Available Books</h2>
+
+<div id="books" class="book-grid"></div>
+
+</section>
+
+
+<script>
+
+
+async function getBookImage(title){
+
+let url="https://www.googleapis.com/books/v1/volumes?q=intitle:"+title;
+
+let res=await fetch(url);
+
+let data=await res.json();
+
+if(data.items && data.items.length>0){
+
+if(data.items[0].volumeInfo.imageLinks){
+
+return data.items[0].volumeInfo.imageLinks.thumbnail;
+
+}
+
+}
+
+return "https://via.placeholder.com/200x250?text=Book";
+
+}
+
+
+
+async function loadBooks(){
+
+let res=await fetch("http://127.0.0.1:5000/books");
+
+let data=await res.json();
+
+let html="";
+
+for(const book of data){
+
+let img=await getBookImage(book.title);
+
+html+=`
+
+<div class="book-card">
+
+<img src="${img}">
+
+<h3>${book.title}</h3>
+
+<p>${book.author}</p>
+
+<p class="price">₹${book.price}</p>
+
+<button onclick="viewBook(${book.id})">
+View Details
+</button>
+
+</div>
+
+`;
+
+}
+
+document.getElementById("books").innerHTML=html;
+
+}
+
+
+
+async function searchBooks(){
+
+let q=document.getElementById("searchInput").value;
+
+let res=await fetch("http://127.0.0.1:5000/search_books?title="+q);
+
+let data=await res.json();
+
+let html="";
+
+for(const book of data){
+
+let img=await getBookImage(book.title);
+
+html+=`
+
+<div class="book-card">
+
+<img src="${img}">
+
+<h3>${book.title}</h3>
+
+<p>${book.author}</p>
+
+<p class="price">₹${book.price}</p>
+
+<button onclick="viewBook(${book.id})">
+View Details
+</button>
+
+</div>
+
+`;
+
+}
+
+document.getElementById("books").innerHTML=html;
+
+}
+
+
+
+function viewBook(id){
+
+window.location.href="book.html?id="+id;
+
+}
+
+
+
+window.onload = loadBooks;
+
+</script>
+
+
+<footer class="footer">
+
+<p>© 2026 BookHub</p>
+
+<p>Academic Book Marketplace</p>
+
+</footer>
+
+
+</body>
+
+</html>

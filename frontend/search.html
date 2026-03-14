@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Search</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<div class="form-container">
+
+<h2>Search Books</h2>
+
+<input id="title" placeholder="Title">
+
+<button onclick="search()">Search</button>
+
+</div>
+
+<div id="books"></div>
+
+<script>
+
+function search(){
+
+fetch("http://127.0.0.1:5000/search_books?title="+document.getElementById("title").value)
+
+.then(res=>res.json())
+
+.then(data=>console.log(data));
+
+}
+
+</script>
+
+</body>
+</html>

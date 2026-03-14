@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Register</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="form-background">
+
+<div class="form-card">
+
+<h2>Create Account</h2>
+
+<input id="name" placeholder="Name">
+
+<input id="email" placeholder="Email">
+
+<input id="password" placeholder="Password">
+
+<button onclick="register()">Register</button>
+
+</div>
+
+</div>
+
+<script>
+
+function register(){
+
+fetch("http://127.0.0.1:5000/register",{
+
+method:"POST",
+
+headers:{"Content-Type":"application/json"},
+
+body:JSON.stringify({
+
+name:document.getElementById("name").value,
+email:document.getElementById("email").value,
+password:document.getElementById("password").value
+
+})
+
+})
+
+.then(res=>res.json())
+
+.then(data=>alert(data.message));
+
+}
+
+</script>
+
+</body>
+</html>

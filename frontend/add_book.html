@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Sell Book</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="form-background">
+
+<div class="form-card">
+
+<h2>Sell Your Book</h2>
+
+<input id="title" placeholder="Book Title">
+
+<input id="author" placeholder="Author">
+
+<input id="price" placeholder="Price">
+
+<input id="seller" placeholder="Seller Email">
+
+<button onclick="addBook()">Add Book</button>
+
+</div>
+
+</div>
+
+<script>
+
+function addBook(){
+
+fetch("http://127.0.0.1:5000/add_book",{
+
+method:"POST",
+
+headers:{"Content-Type":"application/json"},
+
+body:JSON.stringify({
+
+title:document.getElementById("title").value,
+author:document.getElementById("author").value,
+price:document.getElementById("price").value,
+seller_email:document.getElementById("seller").value
+
+})
+
+})
+
+.then(res=>res.json())
+
+.then(data=>alert(data.message));
+
+}
+
+</script>
+
+</body>
+</html>

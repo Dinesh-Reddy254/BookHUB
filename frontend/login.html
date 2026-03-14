@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Login</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="form-background">
+
+<div class="form-card">
+
+<h2>Login to AcadExchange</h2>
+
+<input id="email" placeholder="Email">
+
+<input id="password" type="password" placeholder="Password">
+
+<button onclick="login()">Login</button>
+
+</div>
+
+</div>
+
+<script>
+
+function login(){
+
+fetch("http://127.0.0.1:5000/login",{
+
+method:"POST",
+
+headers:{"Content-Type":"application/json"},
+
+body:JSON.stringify({
+
+email:document.getElementById("email").value,
+password:document.getElementById("password").value
+
+})
+
+})
+
+.then(res=>res.json())
+
+.then(data=>alert(data.message));
+
+}
+
+</script>
+
+</body>
+</html>
